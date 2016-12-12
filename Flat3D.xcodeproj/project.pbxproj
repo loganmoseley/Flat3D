@@ -19,6 +19,9 @@
 		70AA9DCD1DFE1D2B00BD569C /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9DCC1DFE1D2B00BD569C /* Stone.swift */; };
 		70AA9DCF1DFE1D8300BD569C /* LabelNodeRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9DCE1DFE1D8300BD569C /* LabelNodeRepresentable.swift */; };
 		70AA9DD31DFE231300BD569C /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9DD21DFE231300BD569C /* Point.swift */; };
+		70AA9DD51DFE2C1C00BD569C /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9DD41DFE2C1C00BD569C /* Key.swift */; };
+		70AA9DD71DFE2D3100BD569C /* Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9DD61DFE2D3100BD569C /* Cursor.swift */; };
+		70AA9DD91DFE339700BD569C /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9DD81DFE339700BD569C /* Math.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		70AA9DCC1DFE1D2B00BD569C /* Stone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 		70AA9DCE1DFE1D8300BD569C /* LabelNodeRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelNodeRepresentable.swift; sourceTree = "<group>"; };
 		70AA9DD21DFE231300BD569C /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		70AA9DD41DFE2C1C00BD569C /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
+		70AA9DD61DFE2D3100BD569C /* Cursor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cursor.swift; sourceTree = "<group>"; };
+		70AA9DD81DFE339700BD569C /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,9 @@
 				70AA9DB71DFE046D00BD569C /* Actions.sks */,
 				70AA9DB91DFE046D00BD569C /* GameScene.swift */,
 				70AA9DCE1DFE1D8300BD569C /* LabelNodeRepresentable.swift */,
+				70AA9DD61DFE2D3100BD569C /* Cursor.swift */,
+				70AA9DD41DFE2C1C00BD569C /* Key.swift */,
+				70AA9DD81DFE339700BD569C /* Math.swift */,
 				70AA9DC81DFE11F700BD569C /* Matrix.swift */,
 				70AA9DD21DFE231300BD569C /* Point.swift */,
 				70AA9DCA1DFE18C400BD569C /* Size.swift */,
@@ -160,11 +169,14 @@
 			files = (
 				70AA9DCF1DFE1D8300BD569C /* LabelNodeRepresentable.swift in Sources */,
 				70AA9DC91DFE11F700BD569C /* Matrix.swift in Sources */,
+				70AA9DD91DFE339700BD569C /* Math.swift in Sources */,
 				70AA9DBC1DFE046D00BD569C /* ViewController.swift in Sources */,
 				70AA9DBA1DFE046D00BD569C /* GameScene.swift in Sources */,
 				70AA9DD31DFE231300BD569C /* Point.swift in Sources */,
+				70AA9DD71DFE2D3100BD569C /* Cursor.swift in Sources */,
 				70AA9DCD1DFE1D2B00BD569C /* Stone.swift in Sources */,
 				70AA9DB41DFE046D00BD569C /* AppDelegate.swift in Sources */,
+				70AA9DD51DFE2C1C00BD569C /* Key.swift in Sources */,
 				70AA9DCB1DFE18C400BD569C /* Size.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

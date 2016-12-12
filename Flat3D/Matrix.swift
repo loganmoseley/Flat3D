@@ -24,6 +24,10 @@ struct Matrix<T> {
         self.values = values
         self.size3 = size3
     }
+    
+    mutating func set(value: T, at pt3: Point3) {
+        values[pt3.x][pt3.y][pt3.z] = value
+    }
 }
 
 extension Matrix {

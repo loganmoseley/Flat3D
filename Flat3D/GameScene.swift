@@ -26,78 +26,50 @@ class GameScene: SKScene {
     
     var stones: Matrix<Stone> = Matrix(size3: Size3(2,2,2), initializer: .white)
     
+    var stoneLabels: Matrix<SKLabelNode> = Matrix(size3: Size3(2,2,2), initializer: SKLabelNode(text: ""))
+    
+    var cursor: Cursor = Cursor(position: Point3(0,0,0), context: Size3(2,2,2))
+    
     override func didMove(to view: SKView) {
+        stones.set(value: .black, at: cursor.position)
+        render()
+    }
+    
+    func move(accordingTo key: Key) {
+        stones.set(value: .white, at: cursor.position)
+        cursor.move(accordingTo: key)
+        stones.set(value: .black, at: cursor.position)
         
-        let labels = stones.map { SKLabelNode(text: $0.labelNodeText) }
+        render()
+    }
+    
+    func render() {
+        guard let view = view else { return }
         
-        labels.forEach { (label, point3) in
+        stoneLabels.forEach { $0.0.removeFromParent() }
+        
+        stoneLabels = stones.map { SKLabelNode(text: $0.labelNodeText) }
+
+        let size3 = stoneLabels.size3
+        let bounds = view.bounds
+        
+        stoneLabels.forEach { (label, point3) in
             self.addChild(label)
-            let pt2 = point2(from: point3, in: labels.size3)
-            let s2 = size2(from: labels.size3)
-            let x = CGFloat(pt2.x) / CGFloat(s2.width) * view.bounds.width
-            let y = CGFloat(pt2.y) / CGFloat(s2.height) * view.bounds.height
-            label.position = CGPoint(x: x, y: y)
+            let pt2 = point2(from: point3, in: size3)
+            let s2 = size2(from: size3)
+            let x = CGFloat(pt2.x) / CGFloat(s2.width) * bounds.width - (bounds.width / 2)
+            let y = CGFloat(pt2.y) / CGFloat(s2.height) * bounds.height
+            let mysteriousScalar = 0.5 as CGFloat
+            label.position = CGPoint(x: x * mysteriousScalar, y: y * mysteriousScalar)
             label.text = label.text! + "\(point3.x),\(point3.y),\(point3.z)"
         }
-        
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(M_PI), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func mouseDown(with event: NSEvent) {
-        self.touchDown(atPoint: event.location(in: self))
-    }
-    
-    override func mouseDragged(with event: NSEvent) {
-        self.touchMoved(toPoint: event.location(in: self))
-    }
-    
-    override func mouseUp(with event: NSEvent) {
-        self.touchUp(atPoint: event.location(in: self))
     }
     
     override func keyDown(with event: NSEvent) {
-        switch event.keyCode {
-        case 0x31:
-            if let label = self.label {
-                label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-            }
-        default:
+        if let key = Key(rawValue: event.keyCode) {
+            move(accordingTo: key)
+        }
+        else {
             print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
         }
     }

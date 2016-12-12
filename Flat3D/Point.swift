@@ -7,8 +7,8 @@
 //
 
 struct Point2 {
-    let x: Int
-    let y: Int
+    var x: Int
+    var y: Int
     
     init(x: Int, y: Int) {
         self.x = x
@@ -22,9 +22,9 @@ struct Point2 {
 }
 
 struct Point3 {
-    let x: Int
-    let y: Int
-    let z: Int
+    var x: Int
+    var y: Int
+    var z: Int
     
     init(x: Int, y: Int, z: Int) {
         self.x = x
