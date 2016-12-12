@@ -14,14 +14,21 @@ class GameScene: SKScene {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    var stones: Matrix<Stone> = Matrix(size: Size3(2,2,2), initializer: .white)
+    
     override func didMove(to view: SKView) {
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+        let labels = stones.map { (v) -> SKLabelNode in
+            return SKLabelNode(text: v.labelNodeText)
         }
+        
+        labels.forEach { (label) in
+            self.addChild(label)
+            let x = CGFloat(GKRandomSource.sharedRandom().nextUniform()) * view.bounds.width
+            let y = CGFloat(GKRandomSource.sharedRandom().nextUniform()) * view.bounds.height
+            label.position = CGPoint(x: x, y: y)
+        }
+        
         
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05

@@ -7,7 +7,7 @@
 //
 
 struct Matrix<T> {
-    var values: [[[T]]]
+    fileprivate var values: [[[T]]]
     
     init(size: Size3, initializer: @autoclosure () -> T) {
         let i = initializer()
@@ -15,5 +15,20 @@ struct Matrix<T> {
         let y = Array(repeatElement(x, count: size.width))
         let z = Array(repeatElement(y, count: size.height))
         values = z
+    }
+    
+    init(_ values: [[[T]]]) {
+        self.values = values
+    }
+}
+
+extension Matrix {
+    func forEach(_ body: @escaping (T) throws -> Void) rethrows -> Void {
+        return try values.forEach { try $0.forEach { try $0.forEach(body) } }
+    }
+    
+    func map<U>(_ transform: @escaping (T) throws -> U) rethrows -> Matrix<U> {
+        let arr = try values.map { try $0.map { try $0.map(transform) } }
+        return Matrix<U>(arr)
     }
 }
