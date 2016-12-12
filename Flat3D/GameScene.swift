@@ -9,26 +9,36 @@
 import SpriteKit
 import GameplayKit
 
+func point2(from pt3: Point3, in s3: Size3) -> Point2 {
+    return Point2(
+        pt3.x + s3.width * pt3.z,
+        pt3.y)
+}
+
+func size2(from s3: Size3) -> Size2 {
+    return Size2(width: s3.width * s3.length, height: s3.height)
+}
+
 class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    var stones: Matrix<Stone> = Matrix(size: Size3(2,2,2), initializer: .white)
+    var stones: Matrix<Stone> = Matrix(size3: Size3(2,2,2), initializer: .white)
     
     override func didMove(to view: SKView) {
         
-        let labels = stones.map { (v) -> SKLabelNode in
-            return SKLabelNode(text: v.labelNodeText)
-        }
+        let labels = stones.map { SKLabelNode(text: $0.labelNodeText) }
         
-        labels.forEach { (label) in
+        labels.forEach { (label, point3) in
             self.addChild(label)
-            let x = CGFloat(GKRandomSource.sharedRandom().nextUniform()) * view.bounds.width
-            let y = CGFloat(GKRandomSource.sharedRandom().nextUniform()) * view.bounds.height
+            let pt2 = point2(from: point3, in: labels.size3)
+            let s2 = size2(from: labels.size3)
+            let x = CGFloat(pt2.x) / CGFloat(s2.width) * view.bounds.width
+            let y = CGFloat(pt2.y) / CGFloat(s2.height) * view.bounds.height
             label.position = CGPoint(x: x, y: y)
+            label.text = label.text! + "\(point3.x),\(point3.y),\(point3.z)"
         }
-        
         
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05

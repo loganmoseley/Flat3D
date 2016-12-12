@@ -9,26 +9,36 @@
 struct Matrix<T> {
     fileprivate var values: [[[T]]]
     
-    init(size: Size3, initializer: @autoclosure () -> T) {
+    let size3: Size3
+    
+    init(size3: Size3, initializer: @autoclosure () -> T) {
         let i = initializer()
-        let x = Array(repeatElement(i, count: size.length))
-        let y = Array(repeatElement(x, count: size.width))
-        let z = Array(repeatElement(y, count: size.height))
-        values = z
+        let z = Array(repeatElement(i, count: size3.length))
+        let x = Array(repeatElement(z, count: size3.width))
+        let y = Array(repeatElement(x, count: size3.height))
+        self.values = y
+        self.size3 = size3
     }
     
-    init(_ values: [[[T]]]) {
+    fileprivate init(values: [[[T]]], size3: Size3) {
         self.values = values
+        self.size3 = size3
     }
 }
 
 extension Matrix {
-    func forEach(_ body: @escaping (T) throws -> Void) rethrows -> Void {
-        return try values.forEach { try $0.forEach { try $0.forEach(body) } }
+    func forEach(_ body: @escaping (T, Point3) throws -> Void) rethrows -> Void {
+        return try values.enumerated().forEach { (i, tss) in
+            try tss.enumerated().forEach { (j, ts) in
+                try ts.enumerated().forEach { (k, t) in
+                    try body(t, Point3(i, j, k))
+                }
+            }
+        }
     }
     
     func map<U>(_ transform: @escaping (T) throws -> U) rethrows -> Matrix<U> {
         let arr = try values.map { try $0.map { try $0.map(transform) } }
-        return Matrix<U>(arr)
+        return Matrix<U>(values: arr, size3: size3)
     }
 }
